@@ -1,8 +1,8 @@
-import { UserAlreadyExists } from '@/error/user-already-exists'
-import { prisma } from '@/lib/primsa'
+import { UserAlreadyExists as OrganizationAlreadyExists } from '@/error/user-already-exists'
+import { IOrganizationRepository } from '@/repositories/IOrganizationRepository'
 import { hash } from 'bcryptjs'
 
-type RegisterUser = {
+type RegisterOrg = {
   name: string
   email: string
   zipcode: string
@@ -11,23 +11,23 @@ type RegisterUser = {
   password_hash: string
 }
 
-export async function registerUserService({ ...user }: RegisterUser) {
-  user.password_hash = await hash(user.password_hash, 6)
-
-  // check if user already exists
-  const userAlreadyExists = await prisma.org.findUnique({
-    where: {
-      email: user.email,
-    },
-  })
-
-  if (userAlreadyExists) {
-    throw new UserAlreadyExists(`This email ${user.email} already exists`)
+export class RegisterOrganizationService {
+  constructor(private repository: IOrganizationRepository) {
+    this.repository = repository
   }
 
-  await prisma.org.create({
-    data: {
-      ...user,
-    },
-  })
+  async execute({ ...org }: RegisterOrg) {
+    org.password_hash = await hash(org.password_hash, 6)
+
+    // check if user already exists
+    const userAlreadyExists = await this.repository.checkIfOrgExists(org.email)
+
+    if (userAlreadyExists) {
+      throw new OrganizationAlreadyExists(
+        `This email ${org.email} already exists`,
+      )
+    }
+
+    return await this.repository.create({ ...org })
+  }
 }
