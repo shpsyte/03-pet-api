@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
     "name": "John Doe",
-    "email": "john@johssen.com",
+    "email": "john@gmailss.com",
     "zipcode": "12345678",
     "address": "Rua dos bobos",
     "whatsapp": "123456789",
