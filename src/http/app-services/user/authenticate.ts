@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
-import { PrismaOrganizationRepository } from '@/repositories/prisma-user-repository'
-import { AuthenticateService } from '@/services/users/authenticate'
 import { AuthError } from '@/error/autheticate-error'
+import { makeAutheTicateService } from '@/services/factories/make-autheticate-service'
 export async function authenticateUser(
   request: FastifyRequest,
   reply: FastifyReply,
@@ -15,8 +14,7 @@ export async function authenticateUser(
   const { ...org } = registerUserSchema.parse(request.body)
 
   try {
-    const repository = new PrismaOrganizationRepository()
-    const service = new AuthenticateService(repository)
+    const service = makeAutheTicateService()
 
     const response = await service.execute({ ...org })
 
