@@ -3,6 +3,13 @@ import { IOrganizationRepository } from './IOrganizationRepository'
 
 export class InMemoryUserRepository implements IOrganizationRepository {
   public users: Prisma.OrgCreateInput[] = []
+  findByEmail(email: string): Promise<Prisma.OrgCreateInput | null> {
+    return new Promise((resolve) => {
+      const user = this.users.find((user) => user.email === email)
+
+      resolve(user || null)
+    })
+  }
 
   checkIfOrgExists(email: string): Promise<boolean> {
     return new Promise((resolve) => {
@@ -18,9 +25,14 @@ export class InMemoryUserRepository implements IOrganizationRepository {
 
   create(data: Prisma.OrgCreateInput): Promise<Prisma.OrgCreateInput> {
     return new Promise((resolve) => {
-      this.users.push(data)
+      const user = {
+        id: crypto.randomUUID(),
+        ...data,
+      }
 
-      resolve(data)
+      this.users.push(user)
+
+      resolve(user)
     })
   }
 }

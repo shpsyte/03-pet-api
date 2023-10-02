@@ -2,13 +2,19 @@ import { InMemoryUserRepository } from '@/repositories/in-memory-user-repository
 import { RegisterOrganizationService } from '@/services/users/register-user-services'
 import { describe, expect, it } from 'vitest'
 import { compare } from 'bcryptjs'
+import { beforeEach } from 'node:test'
 
 describe('Register user Case ', () => {
-  it('should be has user pwd', async () => {
-    const repo = new InMemoryUserRepository()
-    const userServices = new RegisterOrganizationService(repo)
+  let repo: InMemoryUserRepository
+  let sut: RegisterOrganizationService
 
-    const user = await userServices.execute({
+  beforeEach(() => {
+    repo = new InMemoryUserRepository()
+    sut = new RegisterOrganizationService(repo)
+  })
+
+  it('should be has user pwd', async () => {
+    const user = await sut.execute({
       address: 'Rua teste',
       email: 'j@j.com',
       name: 'teste',
