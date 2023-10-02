@@ -23,9 +23,7 @@ export class RegisterOrganizationService {
     const userAlreadyExists = await this.repository.checkIfOrgExists(org.email)
 
     if (userAlreadyExists) {
-      throw new OrganizationAlreadyExists(
-        `This email ${org.email} already exists`,
-      )
+      throw new OrganizationAlreadyExists()
     }
 
     return await this.repository.create({ ...org })
