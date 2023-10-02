@@ -8,7 +8,7 @@ type RegisterOrg = {
   zipcode: string
   address: string
   whatsapp: string
-  password_hash: string
+  password: string
 }
 
 export class RegisterOrganizationService {
@@ -17,7 +17,7 @@ export class RegisterOrganizationService {
   }
 
   async execute({ ...org }: RegisterOrg) {
-    org.password_hash = await hash(org.password_hash, 6)
+    org.password = await hash(org.password, 6)
 
     // check if user already exists
     const userAlreadyExists = await this.repository.checkIfOrgExists(org.email)

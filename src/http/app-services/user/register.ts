@@ -13,7 +13,7 @@ export async function registerUser(
     zipcode: z.string().max(8),
     address: z.string(),
     whatsapp: z.string(),
-    password_hash: z.string(),
+    password: z.string(),
   })
 
   const { ...org } = registerUserSchema.parse(request.body)

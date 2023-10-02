@@ -16,6 +16,6 @@ Content-Type: application/json
     "zipcode": "12345678",
     "address": "Rua dos bobos",
     "whatsapp": "123456789",
-    "password_hash": "123456"
+    "password": "123456"
 }
 

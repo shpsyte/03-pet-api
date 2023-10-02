@@ -33,15 +33,15 @@ enum EnvironmentEnum {
 }
 
 model Org {
-  id            String   @id @default(uuid())
-  name          String
-  email         String   @unique
-  zipcode       String
-  address       String
-  whatsapp      String
-  password_hash String
-  created_at    DateTime @default(now())
-  Pets          Pet[]
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  zipcode    String
+  address    String
+  whatsapp   String
+  password   String
+  created_at DateTime @default(now())
+  Pets       Pet[]
 
   @@map("organizations")
 }
