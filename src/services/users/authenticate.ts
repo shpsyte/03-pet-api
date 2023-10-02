@@ -1,3 +1,4 @@
+import { AuthError } from '@/error/autheticate-error'
 import { IOrganizationRepository } from '@/repositories/IOrganizationRepository'
 import { compare } from 'bcryptjs'
 
@@ -25,13 +26,13 @@ export class AuthenticateService {
     const user = await this.repository.findByEmail(email)
 
     if (!user) {
-      throw new Error('Email or password incorrect')
+      throw new AuthError()
     }
 
     const passwordMatch = await compare(password, user.password)
 
     if (!passwordMatch) {
-      throw new Error('Email or password incorrect')
+      throw new AuthError()
     }
 
     return {

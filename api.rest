@@ -19,3 +19,13 @@ Content-Type: application/json
     "password": "123456"
 }
 
+
+### POST Authe user
+POST {{ baseUrl }}/user/auth
+Content-Type: application/json
+
+{
+    "email": "john@fs3.com",
+    "password": "123456"
+}
+
