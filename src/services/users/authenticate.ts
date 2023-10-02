@@ -9,6 +9,7 @@ type AuthenticateRequest = {
 
 type AuthenticateResponse = {
   user: {
+    id: string
     name: string
     email: string
   }
@@ -37,6 +38,7 @@ export class AuthenticateService {
 
     return {
       user: {
+        id: user.id as string,
         name: user.name,
         email: user.email,
       },

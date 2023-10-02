@@ -4,7 +4,13 @@ import { petRoutes } from './http/app-services/pet/route'
 import { ZodError } from 'zod'
 import { env } from './env'
 import { AuthError } from './error/autheticate-error'
+import fastifyJwt from '@fastify/jwt'
+
 const app = fastify()
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+})
 
 app.register(userRoutes, { prefix: '/user' })
 app.register(petRoutes, { prefix: '/pet' })

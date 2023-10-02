@@ -16,9 +16,25 @@ export async function authenticateUser(
   try {
     const service = makeAutheTicateService()
 
-    const response = await service.execute({ ...org })
+    const {
+      user: { email, id },
+    } = await service.execute({ ...org })
 
-    return reply.code(200).send(response)
+    const token = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: id,
+        },
+      },
+    )
+
+    return reply.code(200).send({
+      user: {
+        id,
+        token,
+      },
+    })
   } catch (error) {
     if (error instanceof AuthError) {
       return reply.code(401).send({
