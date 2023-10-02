@@ -10,16 +10,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @default(uuid())
+enum AgeEnum {
+  BABY
+  ADULT
+  OLD
+}
+
+enum EnergyEnum {
+  CALM
+  ACTIVE
+}
+
+enum IndependeceEnum {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum EnvironmentEnum {
+  APARTMENT
+  HOUSE
+}
+
+model Org {
+  id            String   @id @default(uuid())
   name          String
-  email         String    @unique
+  email         String   @unique
   zipcode       String
-  address       String?
+  address       String
   whatsapp      String
   password_hash String
-  created_at    DateTime  @default(now())
-  updated_at    DateTime? @updatedAt
+  created_at    DateTime @default(now())
+  Pets          Pet[]
 
-  @@map("users")
+  @@map("organizations")
+}
+
+model Pet {
+  id          String          @id @default(uuid())
+  org_id      String
+  name        String
+  about       String
+  age         AgeEnum
+  energy      EnergyEnum
+  indepence   IndependeceEnum
+  environment EnvironmentEnum
+
+  org Org @relation(fields: [org_id], references: [id])
+
+  Images    Image[]
+  Adoptions Adoption[]
+
+  @@map("pets")
+}
+
+model Image {
+  id     String @id @default(uuid())
+  pet_id String
+  url    String
+  Pet    Pet    @relation(fields: [pet_id], references: [id])
+
+  @@map("images")
+}
+
+model Adoption {
+  id          String @id @default(uuid())
+  pet_id      String
+  requeriment String
+  Pet         Pet    @relation(fields: [pet_id], references: [id])
+
+  @@map("adoption")
 }
