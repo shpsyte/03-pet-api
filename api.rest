@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:3333
+
+### Get All user
+@name = get-all-user
+GET {{ baseUrl }}/user/all
+Accept: application/json
+
+
+### POST Create user
+POST {{ baseUrl }}/user/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "john@johssen.com",
+    "zipcode": "12345678",
+    "address": "Rua dos bobos",
+    "whatsapp": "123456789",
+    "password_hash": "123456"
+}
+
