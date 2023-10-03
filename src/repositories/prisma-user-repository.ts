@@ -4,6 +4,16 @@ import { Prisma } from '@prisma/client'
 import { IOrganizationRepository } from '@/repositories/IOrganizationRepository'
 
 export class PrismaOrganizationRepository implements IOrganizationRepository {
+  async findById(id: string): Promise<Prisma.OrgCreateInput | null> {
+    const user = await prisma.org.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    return user
+  }
+
   async findByEmail(email: string): Promise<Prisma.OrgCreateInput | null> {
     const user = await prisma.org.findUnique({
       where: {

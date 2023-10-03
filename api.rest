@@ -1,4 +1,5 @@
 @baseUrl = http://localhost:3333
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNGJiMDE1OS1kMGFjLTQ2OTAtYmVlNy1hYTRmMGFjMTQyMGUiLCJpYXQiOjE2OTYyOTA3MjZ9.L7Iz79juik_u2ez9vBOOtDvoxEmuTfrh6ffyER7W1D0
 
 ### Get All user
 @name = get-all-user
@@ -30,5 +31,9 @@ Content-Type: application/json
 }
 
 
-### POST Create product
-POST {{ baseUrl }}/product/create
+### get Create product
+GET {{ baseUrl }}/user/current
+Accept: application/json
+Authorization: Bearer {{ token }}
+
+

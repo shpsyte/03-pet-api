@@ -16,6 +16,10 @@ export class RegisterOrganizationService {
     this.repository = repository
   }
 
+  async getCurrentuser(id: string) {
+    return await this.repository.findById(id)
+  }
+
   async execute({ ...org }: RegisterOrg) {
     org.password = await hash(org.password, 6)
 
