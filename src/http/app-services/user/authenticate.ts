@@ -29,12 +29,30 @@ export async function authenticateUser(
       },
     )
 
-    return reply.code(200).send({
-      user: {
-        id,
-        token,
+    const refreshToken = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: id,
+          expiresIn: '7d',
+        },
       },
-    })
+    )
+
+    return reply
+      .setCookie('refreshToken', refreshToken, {
+        path: '/',
+        secure: true,
+        httpOnly: true,
+        sameSite: true,
+      })
+      .code(200)
+      .send({
+        user: {
+          id,
+          token,
+        },
+      })
   } catch (error) {
     if (error instanceof AuthError) {
       return reply.code(401).send({

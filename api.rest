@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3333
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiNGJiMDE1OS1kMGFjLTQ2OTAtYmVlNy1hYTRmMGFjMTQyMGUiLCJpYXQiOjE2OTYyOTA3MjZ9.L7Iz79juik_u2ez9vBOOtDvoxEmuTfrh6ffyER7W1D0
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyZDFhNjRlYy1hMzBiLTQxYTgtYjM3Yi05OWJjYTRiMmVlZDQiLCJpYXQiOjE2OTYzNDkxOTQsImV4cCI6MTY5NjM0OTc5NH0.3LZgrEJ_UjfoPCd82LJhKQPJksStYtogMf2GMDXRKsc
 
 ### Get All user
 @name = get-all-user
@@ -30,10 +30,13 @@ Content-Type: application/json
     "password": "123456"
 }
 
+### refresh token
+PATCH {{ baseUrl }}/user/refresh
+Authorization: Bearer {{ token }}
 
-### get Create product
+
+### get  
 GET {{ baseUrl }}/user/current
-Accept: application/json
 Authorization: Bearer {{ token }}
 
 

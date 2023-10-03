@@ -5,19 +5,21 @@ import { ZodError } from 'zod'
 import { env } from './env'
 import { AuthError } from './error/autheticate-error'
 import fastifyJwt from '@fastify/jwt'
-
+import cookie from '@fastify/cookie'
 const app = fastify()
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
   cookie: {
-    cookieName: 'refreshToken',
-    signed: false,
+    cookieName: 'refreshToken', // the cookie name, required for `cookie` sign and verify
+    signed: false, // don't sign the cookie with JWT (not secure)
   },
   sign: {
     expiresIn: '10m',
   },
 })
+
+app.register(cookie)
 
 app.register(userRoutes, { prefix: '/user' })
 app.register(petRoutes, { prefix: '/pet' })

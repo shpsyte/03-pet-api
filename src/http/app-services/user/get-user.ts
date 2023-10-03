@@ -2,6 +2,7 @@ import { makeRegisterService } from '@/services/factories/make-register-service'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 export async function getUser(request: FastifyRequest, reply: FastifyReply) {
+  console.log('request.user', request.cookies)
   const registerUserService = makeRegisterService()
 
   const id = request.user.sub
